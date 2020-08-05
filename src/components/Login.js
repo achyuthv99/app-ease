@@ -9,25 +9,25 @@ export default class Login extends Component {
 
 
     //login click method
-    clickLogin(){
-        console.log('clicked')
+    clickLogin = () => {
         this.sendreq()
-    }
-
-    //sends login get request
-    async sendreq() {
-        const {data: response} = await axios.get('https://jsonplaceholder.typicode.com/users');
-        console.log(response);
         this.setState((state) => {
             return {LoggedIn: true};
         });
     }
 
+    //sends login get request
+    async sendreq() {
+        const {data: response} = await axios.get('https://jsonplaceholder.typicode.com/users');
+        console.log(response)
+    }
+
+
     //toggle Submit button
     displayForm() {
         if (this.state.LoggedIn === false) {
             return (
-                <form className = 'form'>
+                <form onSubmit = {this.clickLogin} className = 'form'>
                     <h3>Sign In</h3>
 
                     <div className="form-group">
@@ -46,7 +46,7 @@ export default class Login extends Component {
                             <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                         </div>
                     </div>
-                    <button type="submit" onClick = {this.clickLogIn} className="btn btn-primary btn-block">Submit</button>
+                    <button type="submit" className="btn btn-primary btn-block">Submit</button>
                     <p className="forgot-password text-right">
                             Forgot <a href="/">password?</a>
                     </p>
@@ -54,14 +54,12 @@ export default class Login extends Component {
             );
         }
         else{
-            return 
+            
         }
     }
 
     render() {
         return (
-
-
                 <div>
                 {this.displayForm()}
                 </div>
