@@ -1,0 +1,13 @@
+.carousel-item {
+    height: 500px ;
+    margin: auto ;
+    background-color: #BFCFFF ;
+}
+
+.carousel-caption-h3 {
+    color: purple ;
+}
+
+.img {
+    margin: auto;
+}
