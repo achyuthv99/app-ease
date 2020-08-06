@@ -9,7 +9,7 @@ export default class Login extends Component {
             LoggedIn: false,
             email: '',
             password: ''
-        }
+        };
 
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -27,7 +27,7 @@ export default class Login extends Component {
     //login click method
     async handleSubmit(event) {
         event.preventDefault()
-        const jsonLogin = {'email': this.state.email, 'password': this.state.password}
+        const jsonLogin = {"email": this.state.email, "password": this.state.password};
         this.sendreq(jsonLogin)
         this.setState((state) => {
             return {LoggedIn: true};
@@ -36,17 +36,17 @@ export default class Login extends Component {
 
     //sends login get request
     async sendreq(jsonLogin) {
-        const {data: response} = await axios.post('http://localhost:3000/api/auth', jsonLogin);
+        const {data: response} = await axios.post('http://localhost:3000/api/auth',  jsonLogin);
         console.log(response)
     }
 
 
-    //toggle Submit button
+    //toggle form
     displayForm() {
         if (this.state.LoggedIn === false) {
             return (
                 <form onSubmit = {this.handleSubmit} className = 'form'>
-                    <h3>Sign In</h3>
+                    <h3>Log In</h3>
 
                     <div className="form-group">
                         <label>Email address</label>
@@ -64,7 +64,7 @@ export default class Login extends Component {
                             <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                    <button type="submit" className="btn btn-primary btn-block">Log In</button>
                     <p className="forgot-password text-right">
                             Forgot <a href="/">password?</a>
                     </p>
