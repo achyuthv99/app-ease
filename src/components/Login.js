@@ -3,13 +3,31 @@ import axios from 'axios';
 
 export default class Login extends Component {
 
-    state = {
-        LoggedIn : false
+    constructor(props){
+        super(props);
+        this.state = {
+            LoggedIn: false,
+            email: '',
+            password: ''
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    myChangeHandlerUserName = (event) => {
+        this.setState({email: event.target.value});
+    }
+
+    myChangeHandlerPassword = (event) => {
+        this.setState({password: event.target.value});
     }
 
 
+
     //login click method
-    clickLogin = () => {
+    async handleSubmit(event) {
+        event.preventDefault()
+        console.log(this.state.email)
         this.sendreq()
         this.setState((state) => {
             return {LoggedIn: true};
@@ -18,7 +36,7 @@ export default class Login extends Component {
 
     //sends login get request
     async sendreq() {
-        const {data: response} = await axios.get('https://jsonplaceholder.typicode.com/users');
+        const {data: response} = await axios.post('http://localhost:3000/api/auth');
         console.log(response)
     }
 
@@ -27,17 +45,17 @@ export default class Login extends Component {
     displayForm() {
         if (this.state.LoggedIn === false) {
             return (
-                <form onSubmit = {this.clickLogin} className = 'form'>
+                <form onSubmit = {this.handleSubmit} className = 'form'>
                     <h3>Sign In</h3>
 
                     <div className="form-group">
                         <label>Email address</label>
-                        <input type="email" className="form-control" placeholder="Enter email" />
+                        <input type="email" className="form-control" onChange = {this.myChangeHandlerUserName} placeholder="Enter email" />
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input type="password" className="form-control" placeholder="Enter password" />
+                        <input type="password" className="form-control" onChange = {this.myChangeHandlerPassword} placeholder="Enter password" />
                     </div>
 
                     <div className="form-group">
