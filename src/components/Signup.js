@@ -47,7 +47,7 @@ export default class Signup extends Component {
     }
 
     async sendreq(jsonSignUp){
-        const {data: response} = axios.post('http://localhost:3000/api/users', jsonSignUp)
+        const {data: response} = await axios.post('http://localhost:3000/api/users', jsonSignUp)
         console.log(response)
     }
 
