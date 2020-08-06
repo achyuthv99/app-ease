@@ -27,16 +27,16 @@ export default class Login extends Component {
     //login click method
     async handleSubmit(event) {
         event.preventDefault()
-        console.log(this.state.email)
-        this.sendreq()
+        const jsonLogin = {'email': this.state.email, 'password': this.state.password}
+        this.sendreq(jsonLogin)
         this.setState((state) => {
             return {LoggedIn: true};
         });
     }
 
     //sends login get request
-    async sendreq() {
-        const {data: response} = await axios.post('http://localhost:3000/api/auth');
+    async sendreq(jsonLogin) {
+        const {data: response} = await axios.post('http://localhost:3000/api/auth', jsonLogin);
         console.log(response)
     }
 
