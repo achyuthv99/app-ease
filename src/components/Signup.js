@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './Signup.css' ;
 import axios from 'axios';
-import { Router, Route } from 'react-router';
-
-import Login from './Login' ;
 
 export default class Signup extends Component {
 

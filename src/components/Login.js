@@ -1,6 +1,9 @@
 import React, {Component} from 'react' ;
 import axios from 'axios';
 
+import { ProSidebar, Menu, MenuItem, SubMenu, SidebarFooter, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
+import 'react-pro-sidebar/dist/css/styles.css';
+
 export default class Login extends Component {
 
     constructor(props){
@@ -8,7 +11,9 @@ export default class Login extends Component {
         this.state = {
             LoggedIn: false,
             email: '',
-            password: ''
+            password: '',
+            first: true,
+            username: ''
         };
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -28,21 +33,24 @@ export default class Login extends Component {
     async handleSubmit(event) {
         event.preventDefault()
         const jsonLogin = {"email": this.state.email, "password": this.state.password};
-        this.sendreq(jsonLogin)
-        this.setState((state) => {
-            return {LoggedIn: true};
-        });
+        const response = await this.sendreq(jsonLogin)
+        if (response.token !== -1 && response.token !== 'Invalid Login'){
+            this.setState((state) => {
+                return {LoggedIn: true, username: response.name};
+            });
+
+        }
     }
 
     //sends login get request
     async sendreq(jsonLogin) {
         const {data: response} = await axios.post('http://localhost:3000/api/auth',  jsonLogin);
-        console.log(response)
+        return response
     }
 
 
-    //toggle form
-    displayForm() {
+
+    render() {
         if (this.state.LoggedIn === false) {
             return (
                 <form onSubmit = {this.handleSubmit} className = 'form'>
@@ -71,17 +79,25 @@ export default class Login extends Component {
                 </form>
             );
         }
-        else{
-            
+        else if (this.state.first === true){
+            return(
+                <ProSidebar>
+                    <SidebarContent>
+                        <Menu>
+                            <SubMenu title="Storage">
+                                <MenuItem>Look for Storage</MenuItem>
+                                <MenuItem>Offer Storage</MenuItem>
+                            </SubMenu>
+                            <SubMenu title="Parking">
+                                <MenuItem>Look for Parking</MenuItem>
+                                <MenuItem>Offer Parking</MenuItem>
+                            </SubMenu>
+                        </Menu>
+                    </SidebarContent>
+                    
+                </ProSidebar>
+            );
         }
-    }
-
-    render() {
-        return (
-                <div>
-                {this.displayForm()}
-                </div>
-        )
     }
 
     
