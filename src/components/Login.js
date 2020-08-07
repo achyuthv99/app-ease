@@ -82,6 +82,7 @@ export default class Login extends Component {
         else if (this.state.first === true){
             return(
                 <ProSidebar>
+                    <SidebarHeader style = {{textAlign: 'center'}}>Hello, {this.state.username}</SidebarHeader>
                     <SidebarContent>
                         <Menu>
                             <SubMenu title="Storage">
