@@ -12,8 +12,9 @@ export default class Login extends Component {
             LoggedIn: false,
             email: '',
             password: '',
-            first: true,
-            username: ''
+            first: false,
+            username: '',
+            token: ''
         };
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -36,7 +37,7 @@ export default class Login extends Component {
         const response = await this.sendreq(jsonLogin)
         if (response.token !== -1 && response.token !== 'Invalid Login'){
             this.setState((state) => {
-                return {LoggedIn: true, username: response.name};
+                return {LoggedIn: true, username: response.name, first: true, token: response.token};
             });
 
         }
