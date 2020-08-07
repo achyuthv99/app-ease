@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './Signup.css' ;
 import axios from 'axios';
+import { Router, Route } from 'react-router';
+
+import Login from './Login' ;
 
 export default class Signup extends Component {
 
@@ -40,49 +43,66 @@ export default class Signup extends Component {
             "email": this.state.email,
             "password": this.state.password,
         };
-        this.sendreq(jsonSignUp)
-        this.setState((state) => {
-            return {SignedUp: true};
-        });
+        const signed = await this.sendreq(jsonSignUp)
+        if (signed === 'success'){
+            this.setState((state) => {
+                return {SignedUp: true};
+            });
+        }
+        else{
+            this.setState((state) => {
+                return {SignedUp: false};
+            });
+        }
     }
 
     async sendreq(jsonSignUp){
         const {data: response} = await axios.post('http://localhost:3000/api/users', jsonSignUp)
-        console.log(response)
+        return response;
     }
 
 
     render(){
-        return (
-            <form onSubmit = {this.handleSubmit} className='form'>
-                    <h3>Sign Up</h3>
+        if (this.state.SignedUp === false){
+            return (
+                <form onSubmit = {this.handleSubmit} className='form'>
+                        <h3>Sign Up</h3>
 
-                    <div className="form-group">
-                        <label>First name</label>
-                        <input type="text" className="form-control" onChange = {this.myChangeHandlerFirstName} placeholder="First name" />
-                    </div>
+                        <div className="form-group">
+                            <label>First name</label>
+                            <input type="text" className="form-control" onChange = {this.myChangeHandlerFirstName} placeholder="First name" />
+                        </div>
 
-                    <div className="form-group">
-                        <label>Last name</label>
-                        <input type="text" className="form-control" onChange = {this.myChangeHandlerLastName} placeholder="Last name" />
-                    </div>
+                        <div className="form-group">
+                            <label>Last name</label>
+                            <input type="text" className="form-control" onChange = {this.myChangeHandlerLastName} placeholder="Last name" />
+                        </div>
 
-                    <div className="form-group">
-                        <label>Email address</label>
-                        <input type="email" className="form-control" onChange = {this.myChangeHandlerEmail} placeholder="Enter email" />
-                    </div>
+                        <div className="form-group">
+                            <label>Email address</label>
+                            <input type="email" className="form-control" onChange = {this.myChangeHandlerEmail} placeholder="Enter email" />
+                        </div>
 
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input type="password" className="form-control" onChange = {this.myChangeHandlerPassword} placeholder="Enter password" />
-                    </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input type="password" className="form-control" onChange = {this.myChangeHandlerPassword} placeholder="Enter password" />
+                        </div>
 
-                    <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-                    <p className="forgot-password text-right">
-                        Already registered: <a href="/login">sign in?</a>
-                    </p>
-                </form>
-        );
+                        <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                        <p className="forgot-password text-right">
+                            Already registered? <a href="/login">sign in</a>
+                        </p>
+                    </form>
+            );
+            }
+            else{
+                return (
+                <div>
+                    <h1>Welcome, {this.state.firstname}</h1>
+                    <a href="/login">Click here to Log In!</a>
+                </div>
+                );
+            }
         }
     
 }
