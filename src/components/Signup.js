@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Signup.css' ;
 import axios from 'axios';
+import Navigation from './Navigation' ;
 
 export default class Signup extends Component {
 
@@ -62,7 +63,10 @@ export default class Signup extends Component {
     render(){
         if (this.state.SignedUp === false){
             return (
-                <form onSubmit = {this.handleSubmit} className='form'>
+                <div>
+                    <Navigation />
+
+                    <form onSubmit = {this.handleSubmit} className='form'>
                         <h3>Sign Up</h3>
 
                         <div className="form-group">
@@ -90,11 +94,14 @@ export default class Signup extends Component {
                             Already registered? <a href="/login">sign in</a>
                         </p>
                     </form>
+                </div>
             );
             }
             else{
                 return (
                 <div>
+                    <Navigation />
+
                     <h1>Welcome, {this.state.firstname}</h1>
                     <a href="/login">Click here to Log In!</a>
                 </div>
